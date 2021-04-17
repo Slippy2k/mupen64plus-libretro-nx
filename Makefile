@@ -477,8 +477,11 @@ else ifeq ($(platform), emscripten)
 # Windows
 else
    TARGET := $(TARGET_NAME)_libretro.dll
-   LDFLAGS += -shared -static-libgcc -static-libstdc++ -Wl,--version-script=$(LIBRETRO_DIR)/link.T #-static -lmingw32 -lSDL2main -lSDL2 -mwindows -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid  -lsdl2_net -lsdl2 -lws2_32 -lSetupapi -lIPHLPAPI -DHAVE_ANGLE
-   GL_LIB := -lopengl32
+   LDFLAGS += -shared -static-libgcc -static-libstdc++ -Wl,--version-script=$(LIBRETRO_DIR)/link.T -DHAVE_ANGLE
+   GLES3 = 1
+   GL_LIB = -L$(ROOT_DIR)/../angle-bootstraps/Binaries/lib/UWP -lGLESv2
+   EGL_LIB = -L$(ROOT_DIR)/../angle-bootstraps/Binaries/lib/UWP -lEGL
+   COREFLAGS += -g 
    
    ifeq ($(MSYSTEM),MINGW64)
       CC ?= x86_64-w64-mingw32-gcc
